@@ -1,0 +1,1 @@
+export const loginURL = "http://localhost:8080/jpareststarter"

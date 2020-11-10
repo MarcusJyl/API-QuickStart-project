@@ -1,8 +1,8 @@
-import facade from "../apiFacade";
+import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
 import './Login.css'
 
-function LogIn({ login }) {
+function Login({ login, user }) {
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
 
@@ -43,6 +43,7 @@ function LogIn({ login }) {
         </div>
         <button onClick={performLogin}>Login</button>
       </form>
+      {user !== "Loading..." ? user : <> </>}
     </div>
   );
 }
@@ -50,17 +51,17 @@ function LogIn({ login }) {
 function LoggedIn({ user, setUser }) {
   useEffect(() => {
     facade
-      .fetchData("user")
+      .fetchUserRole("user")
       .then((data) => {
         setUser(data.msg);
       })
       .catch(err =>
         facade
-          .fetchData("admin")
+          .fetchUserRole("admin")
           .then((data) => {
             setUser(data.msg);
           })
-          .catch(err => {})
+          .catch(err => setUser(err.message))
       );
   }, []);
 
@@ -72,11 +73,11 @@ function LoggedIn({ user, setUser }) {
   );
 }
 
-function Login({ loggedIn, login, logout, user, setUser }) {
+function LoginDisplay({ login, setUser, user, loggedIn, logout}) {
   return (
     <div className="login">
       {!loggedIn ? (
-        <LogIn login={login} />
+        <Login login={login} user={user}/>
       ) : (
         <div>
           <LoggedIn
@@ -90,4 +91,4 @@ function Login({ loggedIn, login, logout, user, setUser }) {
   );
 }
 
-export default Login;
+export default LoginDisplay;
