@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/MarcusJyl/API-QuickStart-project.svg?branch=main)](https://travis-ci.com/MarcusJyl/API-QuickStart-project)
 # API-QuickStart-project
 
 This document explains how to use this code (build, test and deploy), locally with maven, and remotely with maven controlled by Travis
