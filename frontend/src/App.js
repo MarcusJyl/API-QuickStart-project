@@ -8,6 +8,7 @@ import facade from "./facades/LoginFacade";
 function App() {
   const [user, setUser] = useState("Loading...");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState([]);
 
   const login = (user, pass) => {
     facade
@@ -18,7 +19,7 @@ function App() {
       .catch((err) => {
         if (err.status) {
           err.fullError.then((e) => {
-            setUser(e.message)
+            setUser(e.message);
           });
         } else {
           console.log("Network error");
@@ -30,6 +31,7 @@ function App() {
     facade.logout();
     setUser("Loading...");
     setLoggedIn(false);
+    setUserRole([])
   };
 
   return (
@@ -42,6 +44,8 @@ function App() {
           <Route path="/products" />
           <Route path="/sign-up">
             <Login
+              userRole={userRole}
+              setUserRole={setUserRole}
               login={login}
               setUser={setUser}
               user={user}

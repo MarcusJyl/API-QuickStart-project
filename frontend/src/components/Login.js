@@ -1,6 +1,6 @@
 import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
-import './Login.css'
+import "./Login.css";
 
 function Login({ login, user }) {
   const init = { username: "", password: "" };
@@ -48,21 +48,28 @@ function Login({ login, user }) {
   );
 }
 
-function LoggedIn({ user, setUser }) {
+function LoggedIn({ user, setUser, setUserRole, userRole }) {
   useEffect(() => {
-    facade
-      .fetchUserRole("user")
-      .then((data) => {
-        setUser(data.msg);
-      })
-      .catch(err =>
-        facade
-          .fetchUserRole("admin")
-          .then((data) => {
-            setUser(data.msg);
-          })
-          .catch(err => setUser(err.message))
-      );
+    let tempRoles = []
+    try {
+      facade
+        .fetchUserRole("user")
+        .then((data) => {
+          setUserRole([...data.roles])
+          setUser(data.name);
+        })
+        .catch((err) => {})
+      facade
+        .fetchUserRole("admin")
+        .then((data) => {
+          setUserRole([...data.roles])
+          setUser(data.name);
+        })
+        .catch((err) => {})
+    } catch (err) {
+      console.log(err);
+    }
+
   }, []);
 
   return (
@@ -73,16 +80,26 @@ function LoggedIn({ user, setUser }) {
   );
 }
 
-function LoginDisplay({ login, setUser, user, loggedIn, logout}) {
+function LoginDisplay({
+  login,
+  setUser,
+  user,
+  loggedIn,
+  logout,
+  setUserRole,
+  userRole,
+}) {
   return (
     <div className="login">
       {!loggedIn ? (
-        <Login login={login} user={user}/>
+        <Login login={login} user={user} />
       ) : (
         <div>
           <LoggedIn
             setUser={setUser}
             user={user}
+            setUserRole={setUserRole}
+            userRole={userRole}
           />
           <button onClick={logout}>Logout</button>
         </div>
