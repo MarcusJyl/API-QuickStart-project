@@ -57,7 +57,7 @@ public class UserFacade {
         } catch (Exception e) {}
 
         if (name != null) {
-            throw new InvalidInputException(String.format("Name: %s is already taken", name));
+            throw new InvalidInputException(String.format("The name %s is already taken", name));
         }
 
         User user = new User(userDTO.getName(), userDTO.getPassword());

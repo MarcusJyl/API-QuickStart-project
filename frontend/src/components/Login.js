@@ -1,6 +1,7 @@
 import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 function Login({ login, user }) {
   const init = { username: "", password: "" };
@@ -44,6 +45,7 @@ function Login({ login, user }) {
         <button onClick={performLogin}>Login</button>
       </form>
       {user !== "Loading..." ? user : <> </>}
+      <Link to="/signup">Sign-up</Link>
     </div>
   );
 }

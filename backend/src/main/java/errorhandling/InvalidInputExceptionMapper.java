@@ -26,9 +26,9 @@ public class InvalidInputExceptionMapper implements ExceptionMapper<InvalidInput
     public Response toResponse(InvalidInputException ex) {
        Logger.getLogger(InvalidInputExceptionMapper.class.getName())
            .log(Level.SEVERE, null, ex);
-       ExceptionDTO err = new ExceptionDTO(404,ex.getMessage());
+       ExceptionDTO err = new ExceptionDTO(400,ex.getMessage());
        return Response
-               .status(404)
+               .status(400)
                .entity(gson.toJson(err))
                .type(MediaType.APPLICATION_JSON)
                .build();

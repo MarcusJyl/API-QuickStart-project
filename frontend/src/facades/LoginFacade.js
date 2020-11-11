@@ -19,6 +19,14 @@ function apiFacade() {
       });
   };
 
+  const signup = (username, password) =>{
+    const options = makeOptions("POST", true, {
+      username,
+      password
+    }); 
+    return fetch("http://localhost:8080/jpareststarter/api/signup", options).then(handleHttpErrors);
+  }
+
   const fetchUserRole = (user) => {
     const options = makeOptions("GET", true); 
     return fetch(URL + "/api/info/" + user, options).then(handleHttpErrors);
@@ -31,6 +39,7 @@ function apiFacade() {
     getToken,
     loggedIn,
     logout,
+    signup
   };
 }
 const facade = apiFacade();

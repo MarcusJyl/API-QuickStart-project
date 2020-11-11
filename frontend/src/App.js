@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import facade from "./facades/LoginFacade";
 import Home from "./components/Home";
+import Signup from "./components/Signup";
 
 function App() {
   const [user, setUser] = useState("Loading...");
@@ -45,8 +46,20 @@ function App() {
           </Route>
           <Route path="/services" />
           <Route path="/products" />
-          <Route path="/sign-up">
+          <Route path="/signin">
             <Login
+              userRole={userRole}
+              setUserRole={setUserRole}
+              login={login}
+              setUser={setUser}
+              user={user}
+              loggedIn={loggedIn}
+              logout={logout}
+              setLoggedIn={setLoggedIn}
+            />
+          </Route>
+          <Route path="/signup">
+            <Signup
               userRole={userRole}
               setUserRole={setUserRole}
               login={login}
