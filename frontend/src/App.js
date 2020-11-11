@@ -51,6 +51,7 @@ function App() {
               user={user}
               loggedIn={loggedIn}
               logout={logout}
+              setLoggedIn={setLoggedIn}
             />
           </Route>
         </Switch>

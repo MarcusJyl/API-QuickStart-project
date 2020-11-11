@@ -48,34 +48,35 @@ function Login({ login, user }) {
   );
 }
 
-function LoggedIn({ user, setUser, setUserRole, userRole }) {
+function LoggedIn({ user, setUser, setUserRole, setLoggedIn, userRole }) {
   useEffect(() => {
-    let tempRoles = []
+    setLoggedIn(true);
     try {
       facade
         .fetchUserRole("user")
         .then((data) => {
-          setUserRole([...data.roles])
+          setUserRole([...data.roles]);
           setUser(data.name);
         })
-        .catch((err) => {})
+        .catch((err) => {});
       facade
         .fetchUserRole("admin")
         .then((data) => {
-          setUserRole([...data.roles])
+          setUserRole([...data.roles]);
           setUser(data.name);
         })
-        .catch((err) => {})
+        .catch((err) => {});
     } catch (err) {
+      setLoggedIn(false);
       console.log(err);
     }
-
   }, []);
 
   return (
     <div>
       <h2>Data Received from server</h2>
-      <h3>{user}</h3>
+      <h3>Hello {user}</h3>
+      <h3>Your role is {userRole.map(e => <> {e} </>)}</h3>
     </div>
   );
 }
@@ -88,6 +89,7 @@ function LoginDisplay({
   logout,
   setUserRole,
   userRole,
+  setLoggedIn,
 }) {
   return (
     <div className="login">
@@ -96,10 +98,11 @@ function LoginDisplay({
       ) : (
         <div>
           <LoggedIn
+            userRole={userRole}
             setUser={setUser}
             user={user}
             setUserRole={setUserRole}
-            userRole={userRole}
+            setLoggedIn={setLoggedIn}
           />
           <button onClick={logout}>Logout</button>
         </div>
