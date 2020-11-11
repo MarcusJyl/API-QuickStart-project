@@ -13,3 +13,4 @@ for at opsætte start koden skal der gøres det samme som for den udleveret star
 * ret urlerne i facades/settings.js
 * i components/Navbar.js skal knapper justeres til med Linkmakeren
 * npm start for at start en develper server i browseren
+* https://docs.google.com/document/d/1SQ1PDcd-ySpH4_YAL8tXGnsT9wFdJiBkRtcGZ3Pqq90/edit
