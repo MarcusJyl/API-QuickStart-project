@@ -1,5 +1,15 @@
 
 # API-QuickStart-project [![Build Status](https://travis-ci.com/MarcusJyl/API-QuickStart-project.svg?branch=main)](https://travis-ci.com/MarcusJyl/API-QuickStart-project)
 
-This document explains how to use this code (build, test and deploy), locally with maven, and remotely with maven controlled by Travis
+## Backend setup
+for at opsætte start koden skal der gøres det samme som for den udleveret start koden som ses i dette link
 * [How to use](https://docs.google.com/document/d/1K6s6Tt65bzB8bCSE_NUE8alJrLRNTKCwax3GEm4OjOE/edit)
+
+
+
+
+## Frontend setup
+*  npm install (for at loaded node_moduels)
+* ret urlerne i facades/settings.js
+* i components/Navbar.js skal knapper justeres til med Linkmakeren
+* npm start for at start en develper server i browseren
