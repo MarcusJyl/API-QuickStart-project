@@ -14,8 +14,13 @@ import entities.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -29,6 +34,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import utils.EMF_Creator;
 import utils.HttpUtils;
+import utils.JokeFinder;
 
 /**
  *
@@ -55,7 +61,7 @@ public class JokeResource {
     @Produces(MediaType.APPLICATION_JSON)
 //    @Path("jokes")
 //    @RolesAllowed("user")
-    public String getJokes() throws IOException {
+    public String getJokes() throws IOException, InterruptedException, ExecutionException, TimeoutException {
         List<String> URLS = new ArrayList();
         URLS.add("https://geek-jokes.sameerkumar.website/api?format=json");
         URLS.add("https://matchilling-tronald-dump-v1.p.rapidapi.com/random/quote");
@@ -63,21 +69,44 @@ public class JokeResource {
         URLS.add("https://api.chucknorris.io/jokes/random");
         URLS.add("https://icanhazdadjoke.com");
 
-        String res = "";
-        res = HttpUtils.fetchData(URLS.get(0));
-        JokeDTO joke = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("joke").toString().split("\"")[1],URLS.get(0));
-        res = HttpUtils.fetchData(URLS.get(1));
-        JokeDTO joke1 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("value").toString().split("\"")[1], URLS.get(1));
-        res = HttpUtils.fetchData(URLS.get(2));
-        JokeDTO joke2 = new JokeDTO(res,URLS.get(2));
-        res = HttpUtils.fetchData(URLS.get(3));
-        JokeDTO joke3 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("value").toString().split("\"")[1],URLS.get(3));
-        res = HttpUtils.fetchData(URLS.get(4));
-        JokeDTO joke4 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("joke").toString().split("\"")[1],URLS.get(4));
-        
-        CombinedJokeDTO combi = new CombinedJokeDTO(joke,joke1,joke2,joke3,joke4);
+        List<JokeFinder> urls = new ArrayList();
+        for (String string : URLS) {
+            urls.add(new JokeFinder(string));
+        }
 
+        List<Future<String>> futures = new ArrayList();
+        for (JokeFinder jf : urls) {
+            JokeHandler jh = new JokeHandler(jf);
+            futures.add(es.submit(jh));
+        }
+        List<String> results = new ArrayList();
+        for (Future<String> f : futures) {
+            results.add(f.get(10, TimeUnit.SECONDS));
+            System.out.println(f.get());
+        }
+        JokeDTO joke = new JokeDTO(GSON.fromJson(results.get(0), JsonObject.class).get("joke").toString().split("\"")[1], URLS.get(0));
+        JokeDTO joke1 = new JokeDTO(GSON.fromJson(results.get(1), JsonObject.class).get("value").toString().split("\"")[1], URLS.get(1));
+        JokeDTO joke2 = new JokeDTO(results.get(2), URLS.get(2));
+        JokeDTO joke3 = new JokeDTO(GSON.fromJson(results.get(3), JsonObject.class).get("value").toString().split("\"")[1], URLS.get(3));
+        JokeDTO joke4 = new JokeDTO(GSON.fromJson(results.get(4), JsonObject.class).get("joke").toString().split("\"")[1], URLS.get(4));
 
-    return GSON.toJson(combi);
+        CombinedJokeDTO combi = new CombinedJokeDTO(joke, joke1, joke2, joke3, joke4);
+
+        return GSON.toJson(combi);
+    }
+
+    class JokeHandler implements Callable<String> {
+
+        JokeFinder tc;
+
+        JokeHandler(JokeFinder tc) {
+            this.tc = tc;
+        }
+
+        @Override
+        public String call() throws Exception {
+            tc.get();
+            return new String(tc.getJson());
+        }
     }
 }
