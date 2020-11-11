@@ -6,6 +6,10 @@ security\SharedSecret.class
 security\errorhandling\AuthenticationException.class
 rest\ApplicationConfig.class
 entities\User.class
+<<<<<<< HEAD
+=======
+security\UserPrincipal.class
+>>>>>>> ca848fa4ce99cc15b87009aefd6d1fe85c1e8062
 facades\UserFacade.class
 utils\SetupTestUsers.class
 errorhandling\GenericExceptionMapper.class
