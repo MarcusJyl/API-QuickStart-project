@@ -10,6 +10,7 @@ package DTOs;
  * @author Mads
  */
 public class CombinedJokeDTO {
+
     String joke1;
     String joke1Reference;
     String joke2;
@@ -21,12 +22,17 @@ public class CombinedJokeDTO {
     String joke5;
     String joke5Reference;
 
-    public CombinedJokeDTO(String joke1, String joke2, String joke3, String joke4, String joke5) {
-        this.joke1 = joke1;
-        this.joke2 = joke2;
-        this.joke3 = joke3;
-        this.joke4 = joke4;
-        this.joke5 = joke5;
+    public CombinedJokeDTO(JokeDTO joke1, JokeDTO joke2, JokeDTO joke3, JokeDTO joke4, JokeDTO joke5) {
+        this.joke1 = joke1.getJoke();
+        this.joke2 = joke2.getJoke();
+        this.joke3 = joke3.getJoke();
+        this.joke4 = joke4.getJoke();
+        this.joke5 = joke5.getJoke();
+        this.joke1Reference = joke1.getReference();
+        this.joke2Reference = joke2.getReference();
+        this.joke3Reference = joke3.getReference();
+        this.joke4Reference = joke4.getReference();
+        this.joke5Reference = joke5.getReference();
     }
 
     public String getJoke1() {
@@ -68,6 +74,5 @@ public class CombinedJokeDTO {
     public String getJoke5Reference() {
         return joke5Reference;
     }
-    
-    
+
 }

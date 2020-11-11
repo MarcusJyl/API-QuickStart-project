@@ -5,6 +5,8 @@
  */
 package rest;
 
+import DTOs.CombinedJokeDTO;
+import DTOs.JokeDTO;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,6 +29,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import utils.EMF_Creator;
 import utils.HttpUtils;
+
 /**
  *
  * @author marcg
@@ -54,22 +57,27 @@ public class JokeResource {
 //    @RolesAllowed("user")
     public String getJokes() throws IOException {
         List<String> URLS = new ArrayList();
-        URLS.add("https://geek-jokes.sameerkumar.website/api");
+        URLS.add("https://geek-jokes.sameerkumar.website/api?format=json");
         URLS.add("https://matchilling-tronald-dump-v1.p.rapidapi.com/random/quote");
         URLS.add("https://sv443.net/jokeapi/v2/joke/Any?format=txt&type=single");
         URLS.add("https://api.chucknorris.io/jokes/random");
         URLS.add("https://icanhazdadjoke.com");
+
+        String res = "";
+        res = HttpUtils.fetchData(URLS.get(0));
+        JokeDTO joke = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("joke").toString().split("\"")[1],URLS.get(0));
+        res = HttpUtils.fetchData(URLS.get(1));
+        JokeDTO joke1 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("value").toString().split("\"")[1], URLS.get(1));
+        res = HttpUtils.fetchData(URLS.get(2));
+        JokeDTO joke2 = new JokeDTO(res,URLS.get(2));
+        res = HttpUtils.fetchData(URLS.get(3));
+        JokeDTO joke3 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("value").toString().split("\"")[1],URLS.get(3));
+        res = HttpUtils.fetchData(URLS.get(4));
+        JokeDTO joke4 = new JokeDTO(GSON.fromJson(res, JsonObject.class).get("joke").toString().split("\"")[1],URLS.get(4));
         
-        List<String> result = new ArrayList();
-        for (String string : URLS) {
-            result.add(HttpUtils.fetchData(string));
-        }
-        for (String string : result) {
-            System.out.println(string);
-        }
-//        JokeDto joke = new JokeDTO()
+        CombinedJokeDTO combi = new CombinedJokeDTO(joke,joke1,joke2,joke3,joke4);
 
 
-        return "hej";
+    return GSON.toJson(combi);
     }
 }
