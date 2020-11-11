@@ -27,7 +27,6 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import utils.EMF_Creator;
 import utils.HttpUtils;
-
 /**
  *
  * @author marcg
@@ -60,11 +59,16 @@ public class JokeResource {
         URLS.add("https://sv443.net/jokeapi/v2/joke/Any?format=txt&type=single");
         URLS.add("https://api.chucknorris.io/jokes/random");
         URLS.add("https://icanhazdadjoke.com");
-
+        
+        List<String> result = new ArrayList();
         for (String string : URLS) {
-            System.out.println(string);
-            System.out.println(HttpUtils.fetchData(string));
+            result.add(HttpUtils.fetchData(string));
         }
+        for (String string : result) {
+            System.out.println(string);
+        }
+//        JokeDto joke = new JokeDTO()
+
 
         return "hej";
     }
