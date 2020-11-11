@@ -1,8 +1,12 @@
 package facades;
 
+import DTOs.UserDTO;
+import entities.Role;
 import entities.User;
+import errorhandling.InvalidInputException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import security.errorhandling.AuthenticationException;
 
 /**
@@ -41,6 +45,30 @@ public class UserFacade {
             em.close();
         }
         return user;
+    }
+
+    public UserDTO addUser(UserDTO userDTO) throws InvalidInputException {
+        EntityManager em = emf.createEntityManager();
+        String name = null;
+        try {
+            Query query = em.createQuery("SELECT u.userName FROM User u WHERE u.userName = :name");
+            query.setParameter("name", userDTO.getName());
+            name = (String) query.getSingleResult();
+        } catch (Exception e) {}
+
+        if (name != null) {
+            throw new InvalidInputException(String.format("Name: %s is already taken", name));
+        }
+
+        User user = new User(userDTO.getName(), userDTO.getPassword());
+        for (String role : userDTO.getRoles()) {
+            user.addRole(new Role(role));
+        }
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+
+        return new UserDTO(user);
     }
 
 }

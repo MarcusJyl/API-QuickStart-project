@@ -9,10 +9,12 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
@@ -52,6 +54,25 @@ public class DemoResource {
         } finally {
             em.close();
         }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("user")
+    public String make() {
+        String thisuser = securityContext.getUserPrincipal().getName();
+        JsonObject obj = new JsonObject();
+        obj.addProperty("name", thisuser);
+        JsonArray array = new JsonArray();
+        array.add("user");
+        boolean s = securityContext.isUserInRole("admin");
+        if (s) {
+            array.add("admin");
+        }
+        obj.add("roles", array);
+
+        return obj.toString();
     }
 
     @GET
