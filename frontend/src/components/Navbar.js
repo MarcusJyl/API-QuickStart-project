@@ -39,14 +39,14 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            TRVL
+            BANDEN
             <i className="fab fa-typo3" />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <LinkMaker text="Home" path="home" />
+            <LinkMaker text="Home" path="" />
             <LinkMaker text="Services" path="services" />
             <LinkMaker text="Products" path="products" />
             <li>
@@ -55,11 +55,11 @@ function Navbar() {
                 className="nav-links-mobile"
                 onClick={closeMobileMenu}
               >
-                SIGN IN
+                SING IN
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle="btn--outline">SIGN IN</Button>}
+          {button && <Button buttonStyle="btn--outline">SING IN</Button>}
         </div>
       </nav>
     </>

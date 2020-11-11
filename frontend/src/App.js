@@ -4,6 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import facade from "./facades/LoginFacade";
+import Home from "./components/Home";
 
 function App() {
   const [user, setUser] = useState("Loading...");
@@ -31,7 +32,7 @@ function App() {
     facade.logout();
     setUser("Loading...");
     setLoggedIn(false);
-    setUserRole([])
+    setUserRole([]);
   };
 
   return (
@@ -39,7 +40,9 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/" exact />
+          <Route path="/" exact>
+            <Home />
+          </Route>
           <Route path="/services" />
           <Route path="/products" />
           <Route path="/sign-up">

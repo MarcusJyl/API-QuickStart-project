@@ -6,10 +6,9 @@ security\SharedSecret.class
 security\errorhandling\AuthenticationException.class
 rest\ApplicationConfig.class
 entities\User.class
-<<<<<<< HEAD
-=======
 security\UserPrincipal.class
->>>>>>> ca848fa4ce99cc15b87009aefd6d1fe85c1e8062
+DTOs\CombinedJokeDTO.class
+DTOs\JokeDTO.class
 facades\UserFacade.class
 utils\SetupTestUsers.class
 errorhandling\GenericExceptionMapper.class
@@ -17,10 +16,14 @@ rest\RenameMeResource.class
 security\LoginEndpoint.class
 cors\CorsFilter.class
 entities\Role.class
+rest\DemoResource.class
 security\JWTAuthenticationFilter.class
 facades\FacadeExample.class
 security\RolesAllowedFilter.class
 errorhandling\NotFoundException.class
+utils\JokeFinder.class
+rest\JokeResource$JokeHandler.class
+rest\JokeResource.class
 errorhandling\ExceptionDTO.class
 utils\EMF_Creator.class
 security\errorhandling\AuthenticationExceptionMapper.class
