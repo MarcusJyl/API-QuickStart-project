@@ -1,20 +1,37 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
-import facade from "./apiFacade";
-
+import facade from "./facades/LoginFacade";
 
 function App() {
   const [user, setUser] = useState("Loading...");
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState([]);
 
   const login = (user, pass) => {
     facade
       .login(user, pass)
-      .then((res) => setLoggedIn(true))
-      .catch((err) => setUser(err.msg));
+      .then((res) => {
+        setLoggedIn(true);
+      })
+      .catch((err) => {
+        if (err.status) {
+          err.fullError.then((e) => {
+            setUser(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+  };
+
+  const logout = () => {
+    facade.logout();
+    setUser("Loading...");
+    setLoggedIn(false);
+    setUserRole([])
   };
 
   return (
@@ -26,7 +43,15 @@ function App() {
           <Route path="/services" />
           <Route path="/products" />
           <Route path="/sign-up">
-            <Login login={login}/>
+            <Login
+              userRole={userRole}
+              setUserRole={setUserRole}
+              login={login}
+              setUser={setUser}
+              user={user}
+              loggedIn={loggedIn}
+              logout={logout}
+            />
           </Route>
         </Switch>
       </Router>
