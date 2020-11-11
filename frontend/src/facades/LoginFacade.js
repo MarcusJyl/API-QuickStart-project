@@ -19,9 +19,8 @@ function apiFacade() {
       });
   };
 
-  //MOVE TO ANTHOER FILE
   const fetchUserRole = (user) => {
-    const options = makeOptions("GET", true); //True add's the token
+    const options = makeOptions("GET", true); 
     return fetch(URL + "/api/info/" + user, options).then(handleHttpErrors);
   };
 

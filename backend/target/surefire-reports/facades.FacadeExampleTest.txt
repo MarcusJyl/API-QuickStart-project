@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: facades.FacadeExampleTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.637 s - in facades.FacadeExampleTest
+=======
 Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.983 s <<< FAILURE! - in facades.FacadeExampleTest
 facades.FacadeExampleTest  Time elapsed: 8.982 s  <<< ERROR!
 javax.persistence.PersistenceException: 
@@ -30,3 +33,4 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 Caused by: java.net.ConnectException: Connection refused: connect
 	at facades.FacadeExampleTest.setUpClass(FacadeExampleTest.java:26)
 
+>>>>>>> ca848fa4ce99cc15b87009aefd6d1fe85c1e8062
