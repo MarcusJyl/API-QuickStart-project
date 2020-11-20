@@ -2,7 +2,7 @@ import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
 import { Jumbotron, Row, Col, Form } from "react-bootstrap";
 
-function Signup({ login, user }) {
+function Signup() {
   const init = { username: "", password1: "", password2: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
   const [error, setError] = useState("");
