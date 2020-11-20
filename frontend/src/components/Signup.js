@@ -2,6 +2,7 @@ import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { Jumbotron, Row, Col, Form } from "react-bootstrap";
 
 function Signup({ login, user }) {
   const init = { username: "", password1: "", password2: "" };
@@ -32,7 +33,7 @@ function Signup({ login, user }) {
         setError("Password doesn't match");
       }
     } else {
-        setError("You must write in all fields");
+      setError("You must write in all fields");
     }
   };
   const onChange = (evt) => {
@@ -43,45 +44,27 @@ function Signup({ login, user }) {
   };
 
   return (
-    <div className="login">
-      <h2>Sign-up</h2>
-      <form onChange={onChange} className="form__group">
-        <div className="input">
-          <input
-            type="input"
-            className="form__field"
-            placeholder="Name"
-            name="username"
-            id="username"
-            required
-          />
-        </div>
-        <div className="input">
-          <input
-            type="password"
-            className="form__field"
-            placeholder="Password"
-            name="password1"
-            id="password1"
-            required
-          />
-        </div>
-        <div className="input">
-          <input
-            type="password"
-            className="form__field"
-            placeholder="Password"
-            name="password2"
-            id="password2"
-            required
-          />
-        </div>
-        <button onClick={performLogin}>Login</button>
-      </form>
-      {user !== "Loading..." ? user : <> </>}
-      <Link to="/signup">Sign-up</Link>
-      <p>{error}</p>
-    </div>
+    <Row>
+      <Col></Col>
+      <Col>
+        <Jumbotron className="mt-2 text-center">
+          <h2>Sign-up</h2>
+          <Form.Group controlId="formBasicEmail" onChange={onChange}>
+            <Form.Label>Name</Form.Label>
+            <Form.Control id="username" type="name" placeholder="Enter name" />
+            <Form.Label>Password</Form.Label>
+            <Form.Control id="password1" type="Password" placeholder="Enter Password" />
+            <Form.Label>Repeat Password</Form.Label>
+            <Form.Control id="password2" type="Password" placeholder="Enter Password" />
+            <button className="btn btn-primary m-2" onClick={performLogin}>
+              Sign UP
+            </button>
+          </Form.Group>
+          <p>{error}</p>
+        </Jumbotron>
+      </Col>
+      <Col></Col>
+    </Row>
   );
 }
 

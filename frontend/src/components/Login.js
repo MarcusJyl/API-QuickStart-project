@@ -2,6 +2,7 @@ import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { Jumbotron, Row, Col, Form } from "react-bootstrap";
 
 function Login({ login, user }) {
   const init = { username: "", password: "" };
@@ -20,30 +21,21 @@ function Login({ login, user }) {
 
   return (
     <div>
-      <h2>Login</h2>
-      <form onChange={onChange} className="form__group">
-        <div className="input">
-          <input
-            type="input"
-            className="form__field"
-            placeholder="Name"
-            name="username"
-            id="username"
-            required
-          />
-        </div>
-        <div className="input">
-          <input
-            type="input"
-            className="form__field"
-            placeholder="Password"
-            name="password"
-            id="password"
-            required
-          />
-        </div>
-        <button onClick={performLogin}>Login</button>
-      </form>
+      <h2>Sign-up</h2>
+      <Form.Group controlId="formBasicEmail" onChange={onChange}>
+        <Form.Label>Name</Form.Label>
+        <Form.Control id="username" type="name" placeholder="Enter name" />
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          id="password"
+          type="Password"
+          placeholder="Enter Password"
+        />
+
+        <button className="btn btn-primary m-2" onClick={performLogin}>
+          login
+        </button>
+      </Form.Group>
       {user !== "Loading..." ? user : <> </>}
       <Link to="/signup">Sign-up</Link>
     </div>
@@ -78,7 +70,12 @@ function LoggedIn({ user, setUser, setUserRole, setLoggedIn, userRole }) {
     <div>
       <h2>Data Received from server</h2>
       <h3>Hello {user}</h3>
-      <h3>Your role is {userRole.map(e => <> {e} </>)}</h3>
+      <h3>
+        Your role is{" "}
+        {userRole.map((e) => (
+          <> {e} </>
+        ))}
+      </h3>
     </div>
   );
 }
@@ -94,22 +91,28 @@ function LoginDisplay({
   setLoggedIn,
 }) {
   return (
-    <div className="login">
-      {!loggedIn ? (
-        <Login login={login} user={user} />
-      ) : (
-        <div>
-          <LoggedIn
-            userRole={userRole}
-            setUser={setUser}
-            user={user}
-            setUserRole={setUserRole}
-            setLoggedIn={setLoggedIn}
-          />
-          <button onClick={logout}>Logout</button>
-        </div>
-      )}
-    </div>
+    <Row>
+      <Col></Col>
+      <Col>
+        <Jumbotron className="mt-2 text-center">
+          {!loggedIn ? (
+            <Login login={login} user={user} />
+          ) : (
+            <div>
+              <LoggedIn
+                userRole={userRole}
+                setUser={setUser}
+                user={user}
+                setUserRole={setUserRole}
+                setLoggedIn={setLoggedIn}
+              />
+              <button className="btn btn-danger" onClick={logout}>Logout</button>
+            </div>
+          )}
+        </Jumbotron>
+      </Col>
+      <Col></Col>
+    </Row>
   );
 }
 

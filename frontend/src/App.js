@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
 import Login from "./components/Login";
 import facade from "./facades/LoginFacade";
 import Home from "./components/Home";
@@ -41,35 +42,37 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/services" />
-          <Route path="/products" />
-          <Route path="/signin">
-            <Login
-              userRole={userRole}
-              setUserRole={setUserRole}
-              login={login}
-              setUser={setUser}
-              user={user}
-              loggedIn={loggedIn}
-              logout={logout}
-              setLoggedIn={setLoggedIn}
-            />
-          </Route>
-          <Route path="/signup">
-            <Signup
-              userRole={userRole}
-              setUserRole={setUserRole}
-              login={login}
-              setUser={setUser}
-              user={user}
-              loggedIn={loggedIn}
-              logout={logout}
-              setLoggedIn={setLoggedIn}
-            />
-          </Route>
+          <Container fluid>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/services" />
+            <Route path="/products" />
+            <Route path="/signin">
+              <Login
+                userRole={userRole}
+                setUserRole={setUserRole}
+                login={login}
+                setUser={setUser}
+                user={user}
+                loggedIn={loggedIn}
+                logout={logout}
+                setLoggedIn={setLoggedIn}
+              />
+            </Route>
+            <Route path="/signup">
+              <Signup
+                userRole={userRole}
+                setUserRole={setUserRole}
+                login={login}
+                setUser={setUser}
+                user={user}
+                loggedIn={loggedIn}
+                logout={logout}
+                setLoggedIn={setLoggedIn}
+              />
+            </Route>
+          </Container>
         </Switch>
       </Router>
     </>
