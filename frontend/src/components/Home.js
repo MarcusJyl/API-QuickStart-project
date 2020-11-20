@@ -9,7 +9,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="content">
+    <div className="text-center w-100">
       <h1 className="jokes">Jokes</h1>
       {dataFromServer.isEmpty ? (
         <p>Loading..</p>

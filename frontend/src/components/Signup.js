@@ -1,7 +1,5 @@
 import facade from "../facades/LoginFacade";
 import React, { useState, useEffect } from "react";
-import "./Login.css";
-import { Link } from "react-router-dom";
 import { Jumbotron, Row, Col, Form } from "react-bootstrap";
 
 function Signup({ login, user }) {
