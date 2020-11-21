@@ -1,6 +1,5 @@
 import { makeOptions, handleHttpErrors } from "../utils/fetchUtils";
 import { loginURL as URL } from "../utils/settings";
-import { setToken } from "../utils/token";
 
 function apiFacade() {
   const login = (user, password) => {

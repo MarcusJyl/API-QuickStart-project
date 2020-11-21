@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar user={user} logout={logout}/>
         <Switch>
           <Container fluid>
             <Route path="/" exact>
