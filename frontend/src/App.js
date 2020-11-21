@@ -2,45 +2,23 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import facade from "./facades/LoginFacade";
 import { Jokes, Signup, Login, Home } from "./components";
-
-import { parseJwt } from "./facades/token";
+import { getUserByJwt, setToken } from "./utils/token";
+import {loginMethod, logoutMethode} from './utils/loginUtils'
 
 function App() {
-  const init = {username: "", roles: []}
-  const [user, setUser] = useState(init);
+  const init = { username: "", roles: [] };
+  const [user, setUser] = useState({...init});
+  const login = (user, pass) => loginMethod(user, pass, setUser)
+  const logout = () => logoutMethode(setUser, init)
 
-  const login = (user, pass) => {
-    facade
-      .login(user, pass)
-      .then((res) => {
-        setUser({...getUserByJwt()})
-      })
-      .catch((err) => {
-        if (err.status) {
-          err.fullError.then((e) => {
-            setUser(e.message);
-          });
-        } else {
-          console.log("Network error");
-        }
-      });
-  };
 
-  function getUserByJwt(){
-    if (facade.getToken()) {
-      const tokenUser = parseJwt(facade.getToken());
-      const tempUser = {username: tokenUser.username, roles: [...tokenUser.roles.split(",")]}
 
-      return tempUser
+  useEffect(() => {
+    if(getUserByJwt()){
+      setUser(getUserByJwt())
     }
-  }
-
-  const logout = () => {
-    facade.logout();
-    setUser(init);
-  };
+  },[]);
 
   return (
     <>
@@ -56,14 +34,10 @@ function App() {
             </Route>
             <Route path="/products" />
             <Route path="/signin">
-              <Login
-                login={login}
-                user={user}
-                logout={logout}
-              />
+              <Login login={login} user={user} logout={logout} />
             </Route>
             <Route path="/signup">
-              <Signup/>
+              <Signup />
             </Route>
           </Container>
         </Switch>

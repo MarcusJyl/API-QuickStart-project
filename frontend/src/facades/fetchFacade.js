@@ -1,5 +1,5 @@
-import { handleHttpErrors, makeOptions } from "./fetchUtils";
-import { jokeURL as url } from "./settings";
+import { handleHttpErrors, makeOptions } from "../utils/fetchUtils";
+import { jokeURL as url } from "../utils/settings";
 
 function jokeFetcher() {
   const fetchData = () => {
