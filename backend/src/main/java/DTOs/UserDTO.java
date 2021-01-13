@@ -17,6 +17,7 @@ public class UserDTO {
     private String username;
     private String password;
     private List<String> roles;
+    
 
     public UserDTO(String name, String password, List<String> roles ) {
         this.username = name;

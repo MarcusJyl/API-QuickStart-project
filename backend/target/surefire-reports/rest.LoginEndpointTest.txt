@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: rest.LoginEndpointTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.334 s - in rest.LoginEndpointTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.862 s - in rest.LoginEndpointTest
